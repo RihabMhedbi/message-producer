@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from producer_app.views import MessageViewSet
+from producer_app.views import MessageViewSet, WebhookReceiverView
 
 router = DefaultRouter()
 router.register(r'messages', MessageViewSet)
@@ -25,4 +25,5 @@ router.register(r'messages', MessageViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('webhook/<int:message_id>/', WebhookReceiverView.as_view(), name='webhook_receiver')
 ]

@@ -3,6 +3,7 @@ from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_api_key.permissions import HasAPIKey
 
 from producer_app.models import Message
 from producer_app.serializers import MessageSerializer
@@ -16,6 +17,7 @@ class MessageViewSet(viewsets.ModelViewSet):
 
 
 class WebhookReceiverView(APIView):
+    permission_classes = [HasAPIKey]
     def post(self, request, message_id):
         result = request.data.get('result')
         if not result:
